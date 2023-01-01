@@ -3,6 +3,8 @@ import Select from "react-select";
 import { useState } from "react";
 import { useEffect } from 'react';
 import { json } from 'react-router-dom';
+import Title from "./subcomponent/Title.jsx";
+import Subtitle from "./subcomponent/Subtitle.jsx";
 
 const SignUpWrapper = styled.div`
   margin: min(20rem, 30vh) 0;
@@ -114,29 +116,27 @@ const handleSubmit = (e) => {
  
   return (
     <SignUpWrapper> 
-      <legend> Choose/Change TTC and Bus lines you would like to receive emails:</legend><br/>
+      <Subtitle> Choose/Change TTC and Bus lines you would like to receive emails:</Subtitle><br/>
       <Select options={options} onChange={setary} width="2000px" defaultValue={dbary} isMulti/><br/>
       <form onSubmit={handleSubmit}>
         <input type="hidden"  value={fav}/>
-       
         <input type="submit" value="Submit"/>
       </form>
-      <p>Your Email: {email} </p>
-      <p>Your fullname: {fname} {lname} </p>
-  
+      <Subtitle>Your Email: {email} </Subtitle>
+      <Subtitle>Your fullname: {fname} {lname} </Subtitle>
+
       <div>
-      <div>You are currently subscribed to the following:</div> <br/>
-        {dbary?.map((bus) => {
-          return (
-        <>
-        <div id={bus.id}> {bus.label} </div>
-        </>  
-          )
-        }
-        )}
-        <br/><br/><br/>
-        <div>The following subscriptions of yours have an active alert:</div>
-        
+        <Subtitle>You are currently subscribed to the following:</Subtitle> <br/>
+          {dbary?.map((bus) => {
+            return (
+          <>
+          <Subtitle id={bus.id}> {bus.label} </Subtitle>
+          </>  
+            )
+          }
+          )}
+          <br/><br/><br/>
+          <Subtitle>The following subscriptions of yours have an active alert:</Subtitle>
       </div>
     </SignUpWrapper>
   );

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Select from "react-select";
 import { useState } from "react";
 import { useEffect } from 'react';
+import Subtitle from './subcomponent/Subtitle';
 
 const SignUpWrapper = styled.div`
   margin: min(20rem, 30vh) 0;
@@ -58,7 +59,7 @@ const handleSubmit = (e) => {
 
   return (
     <SignUpWrapper> 
-      <legend> Login to your account to set your alert preferences:</legend><br/>
+      <Subtitle> Login to your account to set your alert preferences:</Subtitle><br/>
       {/* <Select options={options} onChange={setary} width="2000px" defaultValue={ary} isMulti/><br/>{console.log(fav)} */}
       <form onSubmit={handleSubmit}>
         {/* <input type="hidden" onChange={console.log(fav)} value={fav}/> */}

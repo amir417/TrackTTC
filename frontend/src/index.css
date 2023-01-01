@@ -1,15 +1,12 @@
-@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
-/* html {background-color: black} */
 * {
   box-sizing: border-box;
   
 }
 body {
-  background: linear-gradient(rgb(129, 129, 224), rgb(133, 224, 133)) !important; 
+  background: #3c3561;
   min-height: 100vh;
   display: flex;
-  font-weight: 400;
-  font-family: "Fira Sans", sans-serif;
+  font-family: "DM Sans";
 }
 
 h1,
@@ -20,8 +17,7 @@ h5,
 h6,
 label,
 span {
-  font-weight: 500;
-  font-family: "Fira Sans", sans-serif;
+  font-family: "DM Sans";
 }
 
 body,
@@ -79,4 +75,14 @@ html,
 
 .forgot-password a {
   color: #167bff;
+}
+
+@font-face {
+	font-family: "DM Sans";
+	src: url('../assets/DMSans-Regular.ttf');
+}
+
+@font-face {
+	font-family: "DM Sans Bold";
+	src: url('../assets/DMSans-Bold.ttf');
 }

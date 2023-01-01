@@ -5,12 +5,7 @@ import styled from 'styled-components';
 
 const HomeWrapper = styled.div`
   margin: min(20rem, 30vh) 0;
-  /* background-image: linear-gradient(to bottom, rgb(96, 114, 179), rgb(145, 95, 149)); */
 `;
-
-// const RedText = styled.span`
-//   color: #8B0000;
-// `;
 
 const WhiteText = styled.span`
   color: #fff;
