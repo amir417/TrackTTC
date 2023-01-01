@@ -126,8 +126,14 @@ const Navbar = () => {
           <NavTitle>TrackTC</NavTitle>
           <NavbarComponent>
             <NavLink title="home" to="/" style={{textDecoration: 'none'}}><NavFont>Home</NavFont></NavLink>
-            <NavLink title="signup" to="/signup" style={{textDecoration: 'none'}}><NavFont>Sign Up</NavFont></NavLink>
-          </NavbarComponent>
+            <NavLink title="account" to="/account" style={{textDecoration: 'none'}}><NavFont>Account</NavFont></NavLink>
+            <NavLink onClick={() =>{
+                window.localStorage.setItem("loggedIn", false);
+                window.localStorage.clear();
+                window.location.reload()
+                }}
+              title="logout" to="/" style={{textDecoration: 'none'}}><NavFont>Logout</NavFont></NavLink>
+              </NavbarComponent>
           <BurgerbarWrapper onClick={() => updateSideBarOn(true)}>
             <WhiteLine/>
             <WhiteLine/>
@@ -137,8 +143,14 @@ const Navbar = () => {
           ? <SidebarWrapper>
               <XBarWrapper onClick={() => updateSideBarOn(false)}><XBar>×</XBar></XBarWrapper>
               <br/>
-              <NavLink title="home" to="/" style={{textDecoration: 'none'}}><SideFont>Home</SideFont></NavLink>
-              <NavLink title="signup" to="/signup" style={{textDecoration: 'none'}}><SideFont>Sign Up</SideFont></NavLink>
+              <NavLink title="home" to="/" style={{textDecoration: 'none'}}><NavFont>Home</NavFont></NavLink>
+              <NavLink title="account" to="/account" style={{textDecoration: 'none'}}><NavFont>Account</NavFont></NavLink>
+              <NavLink onClick={() =>{
+                window.localStorage.setItem("loggedIn", false);
+                window.localStorage.clear();
+                window.location.reload()
+                }}
+              title="logout" to="/" style={{textDecoration: 'none'}}><NavFont>Logout</NavFont></NavLink>
             </SidebarWrapper> 
           : <></>}
         </NavbarWrapper>

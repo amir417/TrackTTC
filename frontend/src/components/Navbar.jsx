@@ -127,6 +127,7 @@ const Navbar = () => {
           <NavbarComponent>
             <NavLink title="home" to="/" style={{textDecoration: 'none'}}><NavFont>Home</NavFont></NavLink>
             <NavLink title="signup" to="/signup" style={{textDecoration: 'none'}}><NavFont>Sign Up</NavFont></NavLink>
+            <NavLink title="login" to="/login" style={{textDecoration: 'none'}}><NavFont>Login</NavFont></NavLink>
           </NavbarComponent>
           <BurgerbarWrapper onClick={() => updateSideBarOn(true)}>
             <WhiteLine/>
@@ -139,6 +140,7 @@ const Navbar = () => {
               <br/>
               <NavLink title="home" to="/" style={{textDecoration: 'none'}}><SideFont>Home</SideFont></NavLink>
               <NavLink title="signup" to="/signup" style={{textDecoration: 'none'}}><SideFont>Sign Up</SideFont></NavLink>
+              <NavLink title="login" to="/login" style={{textDecoration: 'none'}}><NavFont>Login</NavFont></NavLink>
             </SidebarWrapper> 
           : <></>}
         </NavbarWrapper>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Select from "react-select";
 import { useState } from "react";
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 const SignUpWrapper = styled.div`
   margin: min(20rem, 30vh) 0;
@@ -22,68 +22,57 @@ const InputWrapper = styled.input`
 
 const Signup = () => {
   let favAry = [];
+  const [fname, setfname] = useState('');
+  const [lname, setlname] = useState('');
   const [email, setemail] = useState('');
-  const [fav, setfav] = useState('');
-  const [ary, setary] = useState(null);
+  const [password, setpass] = useState('');
+
+  // const [fav, setfav] = useState('');
+  // const [bus, setary] = useState([]);
 
 const handleSubmit = (e) => {
   e.preventDefault();
-  const blog = {email, fav};
+  const blog = {fname, lname, email, password};
   console.log (blog);
 
 
-  fetch ('http://127.0.0.1:8000/api/SignUp', {
+  fetch ('http://localhost:5000/signup', {
     method: 'POST',
     headers: { "Content-Type": "application/json"},
     body: JSON.stringify(blog)
-  }).then(function(response){
-    console.log (blog);
-    console.log ("Your setting have been saved. You will be notified whenever a problem occurs with the the selected lines.")
   })
-  // .then(function(response){
-  //   return response.json();
-  // })
-}
-
-  const options = [
-    { value: 'line1', label: 'Line 1' },
-    { value: 'line2', label: 'Line 2' },
-    { value: 'line3', label: 'Line 3' },
-    { value: 'line4', label: 'Line 4' }
-  ]
-
-  useEffect(() => {
-    if (ary != null){
-      if (ary.length == 0){
-        setfav(null);
-      }
-      else {
-        setfav(ary[0].label);
-        for (let i = 1; i < ary.length; i++){
-          setfav(fav + "," + ary[i].label);
-        }
-      }
+  .then((res) => res.json())
+  .then ((data) =>  {
+    console.log (data);
+    if (data.status == "ok"){
+      console.log ("Your signup have been saved.")
+      window.open("./login");
     }
-  }, [ary]);
+    else if (data.error == "User Exists"){
+      alert ("User Exists. Please try again");
+    }
+    else {
+      alert(data.error);
+    }
+  }) }
 
-  for (let i = 1; i <= 999; i++){
-    options.push({value: 'line' + i, label: 'Bus ' + i});
-  }
+
  
-  return (
+  return ( <>
     <SignUpWrapper> 
-      <legend> Choose TTC and Bus lines you would like to receive emails:</legend><br/>
-      <Select options={options} onChange={setary} width="2000px" defaultValue={ary} isMulti/><br/>{console.log(fav)}
+      <legend> JOIN TrackTC and never be late again!</legend><br/>
+      {/* <Select options={options} onChange={setary} width="2000px" defaultValue={ary} isMulti/><br/>{console.log(fav)} */}
       <form onSubmit={handleSubmit}>
-        <input type="hidden" onChange={console.log(fav)} value={fav}/>
-        <InputWrapper type="text" onChange={(e) => setemail(e.target.value)} placeholder="Your full name"/> <br/>
+        {/* <input type="hidden" onChange={console.log(fav)} value={fav}/> */}
+        <InputWrapper type="text" onChange={(e) => setfname(e.target.value)} placeholder="Your first name"/> <br/>
+        <InputWrapper type="text" onChange={(e) => setlname(e.target.value)} placeholder="Your last name"/> <br/>
         <InputWrapper type="email" onChange={(e) => setemail(e.target.value)} placeholder="Your email address"/><br/>
-        <InputWrapper type="email" onChange={(e) => setemail(e.target.value)} placeholder="Password"/><br/>
+        <InputWrapper type="password" onChange={(e) => setpass(e.target.value)} placeholder="Password"/><br/>
         {/* <InputWrapper type="password" onChange={(e) => setemail(e.target.value)} placeholder="Your email address"/> <br/> */}
         <input type="submit" value="Submit"/>
       </form>
     </SignUpWrapper>
-  );
+    </>);
 }
 
 export default Signup;

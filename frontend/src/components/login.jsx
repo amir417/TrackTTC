@@ -20,64 +20,50 @@ const InputWrapper = styled.input`
   border-radius: 4px;
 `;
 
-const Signup = () => {
-  let favAry = [];
+const Login = () => {
   const [email, setemail] = useState('');
-  const [fav, setfav] = useState('');
-  const [ary, setary] = useState(null);
+  const [password, setpassword] = useState('');
+
+  
 
 const handleSubmit = (e) => {
   e.preventDefault();
-  const blog = {email, fav};
+  const blog = {email, password};
   console.log (blog);
 
-
-  fetch ('http://127.0.0.1:8000/api/SignUp', {
-    method: 'POST',
-    headers: { "Content-Type": "application/json"},
-    body: JSON.stringify(blog)
-  }).then(function(response){
-    console.log (blog);
-    console.log ("Your setting have been saved. You will be notified whenever a problem occurs with the the selected lines.")
+  fetch("http://localhost:5000/login", {
+    method: "POST",
+    crossDomain: true,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify(blog) ,
   })
-  // .then(function(response){
-  //   return response.json();
-  // })
-}
-
-  const options = [
-    { value: 'line1', label: 'Line 1' },
-    { value: 'line2', label: 'Line 2' },
-    { value: 'line3', label: 'Line 3' },
-    { value: 'line4', label: 'Line 4' }
-  ]
-
-  useEffect(() => {
-    if (ary != null){
-      if (ary.length == 0){
-        setfav(null);
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data, "userRegister");
+      if (data.status == "ok") {
+        // alert("login successful");
+        window.localStorage.setItem("token", data.data);
+        window.localStorage.setItem("loggedIn", true);
+        window.location.href = "./account";
       }
       else {
-        setfav(ary[0].label);
-        for (let i = 1; i < ary.length; i++){
-          setfav(fav + "," + ary[i].label);
-        }
+        alert (data.error);
       }
-    }
-  }, [ary]);
+    });
+}
 
-  for (let i = 1; i <= 999; i++){
-    options.push({value: 'line' + i, label: 'Bus ' + i});
-  }
- 
   return (
     <SignUpWrapper> 
-      <legend> Choose TTC and Bus lines you would like to receive emails:</legend><br/>
-      <Select options={options} onChange={setary} width="2000px" defaultValue={ary} isMulti/><br/>{console.log(fav)}
+      <legend> Login to your account to set your alert preferences:</legend><br/>
+      {/* <Select options={options} onChange={setary} width="2000px" defaultValue={ary} isMulti/><br/>{console.log(fav)} */}
       <form onSubmit={handleSubmit}>
-        <input type="hidden" onChange={console.log(fav)} value={fav}/>
-        <InputWrapper type="text" onChange={(e) => setemail(e.target.value)} placeholder="Your full name"/> <br/>
-        <InputWrapper type="email" onChange={(e) => setemail(e.target.value)} placeholder="Your email address"/><br/>
+        {/* <input type="hidden" onChange={console.log(fav)} value={fav}/> */}
+        <InputWrapper type="email" onChange={(e) => setemail(e.target.value)} placeholder="Your email address"/> <br/>
+        <InputWrapper type="password" onChange={(e) => setpassword(e.target.value)} placeholder="Your password"/><br/>
         {/* <InputWrapper type="password" onChange={(e) => setemail(e.target.value)} placeholder="Your email address"/> <br/> */}
         <input type="submit" value="Submit"/>
       </form>
@@ -85,4 +71,4 @@ const handleSubmit = (e) => {
   );
 }
 
-export default Signup;
+export default Login;

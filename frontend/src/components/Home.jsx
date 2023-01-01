@@ -1,4 +1,4 @@
-import Table from "./Table.jsx";
+import Table from "./subcomponent/Table.jsx";
 import Title from "./subcomponent/Title.jsx";
 import Subtitle from "./subcomponent/Subtitle.jsx";
 import styled from 'styled-components';
@@ -23,7 +23,7 @@ const GoldText = styled.span`
 const Home = () => {
   return (
     <HomeWrapper>
-      <Title><GoldText>Notify yourself on potential <WhiteText>TTC</WhiteText>/Bus alerts.</GoldText></Title>
+      <Title><GoldText>Notify yourself on potential <WhiteText>TTC</WhiteText> alerts.</GoldText></Title>
       <Subtitle>TrackTC will take care of all TTC alerts in Downtown Toronto along your commute, using reliable database system.</Subtitle>
       <Table/>
     </HomeWrapper>
