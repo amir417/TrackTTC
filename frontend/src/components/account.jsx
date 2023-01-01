@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Select from "react-select";
 import { useState } from "react";
 import { useEffect } from 'react';
+import { json } from 'react-router-dom';
 
 const SignUpWrapper = styled.div`
   margin: min(20rem, 30vh) 0;
@@ -29,6 +30,8 @@ const Account = () => {
   const [email, setemail] = useState('');
   const [fname, setnamef] = useState('');
   const [lname, setnamel] = useState('');
+  const [dbary, setDBary] = useState(null);
+  const [newbus, setBus] = useState(true);
 
 
   useEffect(() => {
@@ -40,11 +43,12 @@ const Account = () => {
       body: JSON.stringify({token: window.localStorage.getItem("token")})
     }).then((res) => res.json())
     .then((data) => {
-      console.log(data, "userData");
+      console.log(data, "userData.");
       if (data.status == "ok"){
         setemail(  data.data.email );
         setnamef(  data.data.fname );
         setnamel(  data.data.lname );
+        setDBary (data.data.bus);
       }
       else {
         alert (data);
@@ -58,14 +62,28 @@ const Account = () => {
 
 const handleSubmit = (e) => {
   e.preventDefault();
-  const blog = { ary};
+  const token = window.localStorage.getItem("token");
+  const blog = { token, ary};
   console.log (JSON.stringify(blog));
 
   fetch ('http://localhost:5000/account', {
     method: 'PUT',
     headers: { "Content-Type": "application/json"},
     body: JSON.stringify(blog)
-  })
+  }).then((res) => res.json())
+  .then((data) => {
+    if (data.status == "ok"){
+      alert ("Your preferences have been updated.");
+      console.log (data.data);
+      setDBary (data.data);
+      console.log (dbary);
+      
+    }
+    else {
+      alert (data.status);
+    }
+  }
+  )
  
 }
 
@@ -97,14 +115,29 @@ const handleSubmit = (e) => {
   return (
     <SignUpWrapper> 
       <legend> Choose/Change TTC and Bus lines you would like to receive emails:</legend><br/>
-      <Select options={options} onChange={setary} width="2000px" defaultValue={ary} isMulti/><br/>
+      <Select options={options} onChange={setary} width="2000px" defaultValue={dbary} isMulti/><br/>
       <form onSubmit={handleSubmit}>
         <input type="hidden"  value={fav}/>
        
         <input type="submit" value="Submit"/>
       </form>
-      <p>{email} 
-      {fname} {lname} </p>
+      <p>Your Email: {email} </p>
+      <p>Your fullname: {fname} {lname} </p>
+  
+      <div>
+      <div>You are currently subscribed to the following:</div> <br/>
+        {dbary?.map((bus) => {
+          return (
+        <>
+        <div id={bus.id}> {bus.label} </div>
+        </>  
+          )
+        }
+        )}
+        <br/><br/><br/>
+        <div>The following subscriptions of yours have an active alert:</div>
+        
+      </div>
     </SignUpWrapper>
   );
 }

@@ -36,31 +36,32 @@ accountRouter.route('/')
     } catch (error) {}
   })
   .put(async (req, res) => {
-    const { ary } = req.body;
-    const {email} = data.email;
-    // try {
-    //   const user = jwt.verify(token, JWT_SECRET, (err, res) => {
-    //     if (err) {
-    //       return "token expired";
-    //     }
-    //     return res;
-    //   });
-    //   console.log(user);
-    //   if (user == "token expired") {
-    //     return res.send({ status: "error", data: "token expired" });
-    //   }
-  
-    //   const useremail = user.email;
+    // const {ary} = new Array;
+    const {token, ary}= req.body;
 
-      User.findOne({ email })
+    try {
+      const user = jwt.verify(token, JWT_SECRET, (err, res) => {
+        if (err) {
+          return "token expired999";
+        }
+        return res;
+      });
+      console.log(user);
+      if (user == "token expired") {
+        return res.send({ status: "error", data: "token expired" });
+      }
+  
+      const useremail = user.email;
+
+      User.updateOne({ email : useremail}, {$set: {"bus": ary}})
         .then((data) => {
-          data.bus  = ary;
-          res.send({ status: "ok", data: data });
+          // data.bus  = ary;
+          res.send({ status: "ok", data: ary });
         })
         .catch((error) => {
           res.send({ status: "error", data: error });
         });
-    } 
-    );
+    } catch (error) {}
+  });
   
-  module.exports = accountRouter;
+module.exports = accountRouter;
