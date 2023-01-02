@@ -3,29 +3,32 @@ import Select from "react-select";
 import { useState } from "react";
 import { useEffect } from 'react';
 import { json } from 'react-router-dom';
-import Title from "./subcomponent/Title.jsx";
 import Subtitle from "./subcomponent/Subtitle.jsx";
+import { BoxWrapper, Button } from './SubmitBoxStyles';
+import { Bold } from './subcomponent';
 
-const SignUpWrapper = styled.div`
-  margin: min(20rem, 30vh) 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const InputWrapper = styled.input`
-  background: #fff;
+const FontBlack = styled.span`
   color: #000;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid #000;
-  border-radius: 4px;
 `;
+
+const Dashboard = styled.div`
+  display: flex;
+  flex-direction: column;  
+  margin: 0 5vw;
+  max-width: 150rem;
+  background: #fff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
+  padding: 8vh 0 5vh 0;
+  min-height: 60vh;
+`
+
+const SelectWrapper = styled.div`
+  width: 70%;
+  margin: auto;
+`
 
 const Account = () => {
-  
-
   let favAry = [];
   const [fav, setfav] = useState('');
   const [ary, setary] = useState(null);
@@ -35,10 +38,7 @@ const Account = () => {
   const [dbary, setDBary] = useState(null);
   const [newbus, setBus] = useState(true);
 
-
   useEffect(() => {
-    
- 
     fetch ('http://localhost:5000/account', {
       method: 'POST',
       headers: { "Content-Type": "application/json"},
@@ -59,35 +59,30 @@ const Account = () => {
     });
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const token = window.localStorage.getItem("token");
+    const blog = {token, ary};
+    console.log(JSON.stringify(blog));
 
-
-
-const handleSubmit = (e) => {
-  e.preventDefault();
-  const token = window.localStorage.getItem("token");
-  const blog = { token, ary};
-  console.log (JSON.stringify(blog));
-
-  fetch ('http://localhost:5000/account', {
-    method: 'PUT',
-    headers: { "Content-Type": "application/json"},
-    body: JSON.stringify(blog)
-  }).then((res) => res.json())
-  .then((data) => {
-    if (data.status == "ok"){
-      alert ("Your preferences have been updated.");
-      console.log (data.data);
-      setDBary (data.data);
-      console.log (dbary);
-      
+    fetch ('http://localhost:5000/account', {
+      method: 'PUT',
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(blog)
+    }).then((res) => res.json())
+    .then((data) => {
+      if (data.status == "ok"){
+        alert ("Your preferences have been updated.");
+        console.log (data.data);
+        setDBary (data.data);
+        console.log (dbary);
+      }
+      else {
+        alert (data.status);
+      }
     }
-    else {
-      alert (data.status);
-    }
+    )
   }
-  )
- 
-}
 
   const options = [
     { value: 1, label: 'Subway 1' },
@@ -115,30 +110,42 @@ const handleSubmit = (e) => {
   }
  
   return (
-    <SignUpWrapper> 
-      <Subtitle> Choose/Change TTC and Bus lines you would like to receive emails:</Subtitle><br/>
-      <Select options={options} onChange={setary} width="2000px" defaultValue={dbary} isMulti/><br/>
-      <form onSubmit={handleSubmit}>
-        <input type="hidden"  value={fav}/>
-        <input type="submit" value="Submit"/>
-      </form>
-      <Subtitle>Your Email: {email} </Subtitle>
-      <Subtitle>Your fullname: {fname} {lname} </Subtitle>
+    <BoxWrapper> 
+      <Dashboard>
+        <Subtitle>
+          <FontBlack>
+            <Bold>Choose/Change TTC</Bold> and <Bold>Bus</Bold> lines you would like to receive <Bold>emails</Bold>:
+          </FontBlack>
+        </Subtitle><br/>
 
-      <div>
-        <Subtitle>You are currently subscribed to the following:</Subtitle> <br/>
-          {dbary?.map((bus) => {
-            return (
-          <>
-          <Subtitle id={bus.id}> {bus.label} </Subtitle>
-          </>  
-            )
-          }
-          )}
-          <br/><br/><br/>
-          <Subtitle>The following subscriptions of yours have an active alert:</Subtitle>
-      </div>
-    </SignUpWrapper>
+        <SelectWrapper>
+          <Select options={options} onChange={setary} autosize={true} defaultValue={dbary} isMulti/><br/>
+        </SelectWrapper>
+        
+        <form onSubmit={handleSubmit}>
+          <input type="hidden" value={fav}/>
+          <Button/>
+        </form>
+        <Subtitle>Your Email Address: {email} </Subtitle>
+        <Subtitle>Your Full Name: {fname} {lname} </Subtitle>
+        <div>
+          <Subtitle><FontBlack>You are currently <Bold>subscribed</Bold> to the following:</FontBlack></Subtitle><br/>
+            {dbary?.map((bus) => {
+              return (
+                <>
+                  <Subtitle id={bus.id}>
+                    <FontBlack>
+                      <Bold>{bus.label}</Bold>
+                    </FontBlack>
+                  </Subtitle>
+                </>  
+              )
+            })}
+            <br/><br/><br/>
+            <Subtitle><FontBlack>The following subscriptions of yours have an active alert:</FontBlack></Subtitle>
+        </div>
+      </Dashboard>
+    </BoxWrapper>
   );
 }
 

@@ -1,20 +1,19 @@
-import React, { Component } from "react";
-import { render } from 'react-dom';
-import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home.jsx";
 import Navbar from "./Navbar.jsx";
-import Navbar2 from "./Navbar2";
+import VerifiedNavbar from "./VerifiedNavbar.jsx";
 import Signup from "./Signup.jsx";
 import Login from "./Login";
 import Account from "./Account";
 
 window.React = React;
 
- const App = () => {
+const App = () => {
     const isLogged = window.localStorage.getItem("loggedIn");
     return (
         <Router>
-           {isLogged ? <Navbar2/> : <Navbar/> }
+           {isLogged ? <VerifiedNavbar/> : <Navbar/> }
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/signup" element={isLogged ? <Account/> : <Signup/>}/>

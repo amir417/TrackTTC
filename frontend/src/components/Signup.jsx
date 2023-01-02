@@ -1,24 +1,11 @@
 import styled from 'styled-components';
-import Select from "react-select";
 import { useState } from "react";
-// import { useEffect } from 'react';
 import Subtitle from './subcomponent/Subtitle';
+import { BoxWrapper, WhiteWrapper, StyledInput, Button } from './SubmitBoxStyles';
+import { Bold } from './subcomponent';
 
-const SignUpWrapper = styled.div`
-  margin: min(20rem, 30vh) 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const InputWrapper = styled.input`
-  background: #fff;
+const FontBlack = styled.span`
   color: #000;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid #000;
-  border-radius: 4px;
 `;
 
 const Signup = () => {
@@ -57,23 +44,23 @@ const handleSubmit = (e) => {
     }
   }) }
 
-
- 
-  return ( <>
-    <SignUpWrapper> 
-      <Subtitle> JOIN TrackTC and never be late again!</Subtitle><br/>
-      {/* <Select options={options} onChange={setary} width="2000px" defaultValue={ary} isMulti/><br/>{console.log(fav)} */}
-      <form onSubmit={handleSubmit}>
-        {/* <input type="hidden" onChange={console.log(fav)} value={fav}/> */}
-        <InputWrapper type="text" onChange={(e) => setfname(e.target.value)} placeholder="Your first name"/> <br/>
-        <InputWrapper type="text" onChange={(e) => setlname(e.target.value)} placeholder="Your last name"/> <br/>
-        <InputWrapper type="email" onChange={(e) => setemail(e.target.value)} placeholder="Your email address"/><br/>
-        <InputWrapper type="password" onChange={(e) => setpass(e.target.value)} placeholder="Password"/><br/>
-        {/* <InputWrapper type="password" onChange={(e) => setemail(e.target.value)} placeholder="Your email address"/> <br/> */}
-        <input type="submit" value="Submit"/>
-      </form>
-    </SignUpWrapper>
-    </>);
+  return (
+    <BoxWrapper> 
+      <WhiteWrapper>
+        <Subtitle><FontBlack><Bold>JOIN TrackTC</Bold> and never be late again!</FontBlack></Subtitle><br/>
+        {/* <Select options={options} onChange={setary} width="2000px" defaultValue={ary} isMulti/><br/>{console.log(fav)} */}
+        <form onSubmit={handleSubmit}>
+          {/* <input type="hidden" onChange={console.log(fav)} value={fav}/> */}
+          <StyledInput type="text" onChange={(e) => setfname(e.target.value)} placeholder="Your first name"/> 
+          <StyledInput type="text" onChange={(e) => setlname(e.target.value)} placeholder="Your last name"/> 
+          <StyledInput type="email" onChange={(e) => setemail(e.target.value)} placeholder="Your email address"/>
+          <StyledInput type="password" onChange={(e) => setpass(e.target.value)} placeholder="Password"/>
+          {/* <StyledInput type="password" onChange={(e) => setemail(e.target.value)} placeholder="Your email address"/> */}
+          <Button/>
+        </form>
+      </WhiteWrapper>
+    </BoxWrapper>
+  );
 }
 
 export default Signup;

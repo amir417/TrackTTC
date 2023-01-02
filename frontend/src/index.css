@@ -3,7 +3,7 @@
   
 }
 body {
-  background: #3c3561;
+  background: linear-gradient(#005C97, #363795) !important; 
   min-height: 100vh;
   display: flex;
   font-family: "DM Sans";
