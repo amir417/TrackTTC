@@ -5,8 +5,9 @@ const TitleWrapper = styled.h1`
   line-height: 110%;
 
   text-align: center;
-  letter-spacing: -0.04em;
-  color: #000000;
+  letter-spacing: -0.04em;  
+  font-weight: normal;
+  color: #fff;
   text-shadow: 0px 4px 4px #777;
 `;
 

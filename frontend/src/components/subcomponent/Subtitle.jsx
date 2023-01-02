@@ -6,7 +6,8 @@ const SubtitleWrapper = styled.h2`
 
   text-align: center;
   margin: 0 5vw;
-  color: rgba(0, 0, 0, 0.8);
+  font-weight: normal;
+  color: #fff;
 `;
 
 const Subtitle = (props) => {
