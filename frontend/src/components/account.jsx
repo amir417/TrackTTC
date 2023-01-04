@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import Select from "react-select";
-import { useState } from "react";
+import { useState, Link } from "react";
 import { useEffect } from 'react';
 import { json } from 'react-router-dom';
 import Subtitle from "./subcomponent/Subtitle.jsx";
 import { BoxWrapper, Button } from './SubmitBoxStyles';
 import { Bold } from './subcomponent';
+import {TiDelete} from "react-icons/ti"
+
 
 const FontBlack = styled.span`
   color: #000;
@@ -36,7 +38,7 @@ const Account = () => {
   const [fname, setnamef] = useState('');
   const [lname, setnamel] = useState('');
   const [dbary, setDBary] = useState(null);
-  const [newbus, setBus] = useState(true);
+  const [delBus, setBus] = useState('');
 
   useEffect(() => {
     fetch ('http://localhost:5000/account', {
@@ -83,6 +85,34 @@ const Account = () => {
     }
     )
   }
+  const handleDel = (e) => {
+    // e.preventDefault();
+    setBus(e);
+    const bus = delBus;
+    const token = window.localStorage.getItem("token");
+    console.log (token, bus);
+    const blog = {token, bus}
+    console.log (blog)
+    console.log (JSON.stringify(blog));
+    fetch ('http://localhost:5000/account', {
+      method: 'DELETE',
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(blog)
+    }).then((res) => res.json())
+    .then((data) => {
+      if (data.status == "ok"){
+        alert ("Your preferences have been updated.");
+        console.log (data.data);
+        setDBary (data.data);
+        console.log (dbary);
+      }
+      else {
+        alert (data.status);
+      }
+    }
+    )
+
+  }
 
   const options = [
     { value: 1, label: 'Subway 1' },
@@ -99,7 +129,8 @@ const Account = () => {
       else {
         setfav(ary[0].label);
         for (let i = 1; i < ary.length; i++){
-          setfav(fav + "," + ary[i].label);
+          setfav(fav + "," + ary[i].label); {/*bus numbers go from 7 to 499 and then from 900 to 999
+        streecars only have 500 line (500-600). subway only 1-4*/ }
         }
       }
     }
@@ -114,7 +145,7 @@ const Account = () => {
       <Dashboard>
         <Subtitle>
           <FontBlack>
-            <Bold>Choose/Change TTC</Bold> and <Bold>Bus</Bold> lines you would like to receive <Bold>emails</Bold>:
+            <Bold>Choose/Change TTC</Bold> and <Bold>Bus</Bold> lines (up to 50) you would like to receive <Bold>emails</Bold>:
           </FontBlack>
         </Subtitle><br/>
 
@@ -134,8 +165,8 @@ const Account = () => {
               return (
                 <>
                   <Subtitle id={bus.id}>
-                    <FontBlack>
-                      <Bold>{bus.label}</Bold>
+                    <FontBlack> 
+                      <Bold>{bus.label}</Bold> <button type='button' onClick={()=>handleDel(bus.label)} ><TiDelete/></button> 
                     </FontBlack>
                   </Subtitle>
                 </>  

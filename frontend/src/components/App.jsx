@@ -4,8 +4,8 @@ import Home from "./Home.jsx";
 import Navbar from "./Navbar.jsx";
 import VerifiedNavbar from "./VerifiedNavbar.jsx";
 import Signup from "./Signup.jsx";
-import Login from "./Login";
-import Account from "./Account";
+import Login from "./login";
+import Account from "./account";
 
 window.React = React;
 

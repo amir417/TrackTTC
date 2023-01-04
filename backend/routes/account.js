@@ -62,6 +62,32 @@ accountRouter.route('/')
           res.send({ status: "error", data: error });
         });
     } catch (error) {}
-  });
+  })
+  .delete (async (req,res) => {
+    const {token, bus} = req.body;
+    try {
+      const user = jwt.verify(token, JWT_SECRET, (err, res) => {
+        if (err) {
+          return "token expired999";
+        }
+        return res;
+      });
+      console.log(user);
+      if (user == "token expired") {
+        return res.send({ status: "error", data: "token expired" });
+      }
+  
+      const useremail = user.email;
+
+      User.updateOne({ email : useremail}, {$pull: {bus: {label: bus}}})
+      .then((data) => {
+        // data.bus  = ary;
+        res.send({ status: "ok", data: ary });
+      })
+      .catch((error) => {
+        res.send({ status: "error", data: error });
+      });
+    } catch (error) {}
+  })
   
 module.exports = accountRouter;
