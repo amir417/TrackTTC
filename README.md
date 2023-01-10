@@ -1,4 +1,4 @@
-# TrackTTC
+# TrackTC
 # DevPost: https://devpost.com/software/tracktc
 Commuter students often face challenges when it comes to staying informed about potential delays or cancellations on the TTC. It can be difficult for some students to regularly check relevant sources, such as the transit agency's website or social media, which can result in missed information and unexpected disruptions to their commute. This can have serious consequences, like arriving late to exams or important meetings. To address these issues, our team developed TrackTC, a new tool built with React.js and Express.js that utilizes a MongoDB database. It is designed to help commuter students stay up-to-date and plan their trips more efficiently.
 
